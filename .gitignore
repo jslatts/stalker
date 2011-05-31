@@ -1,0 +1,4 @@
+*.swp
+*.swo
+nodemon-ignore
+npm-debug.log

@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git://github.com/jslatts/stalker.git"
   },
-  "main": "index.js",
+  "main": "stalker.js",
   "engines": {
     "node": "v0.4.8"
   },
