@@ -1,8 +1,22 @@
 # Stalker
 
+Stalker is a utility to watch a directory tree for incomign files and fire off 
+the callback function __OF YOUR CHOICE!__.
+
+It should be smart enough to multiple files/folders being dropped into the 
+directory being stalked. I haven't tested it much. Be warned!
+
 ## Installation
 
     $ npm install stalker
+
+## How to use
+
+    var stalker = require('stalker');
+
+    stalker.watch('some_directory', function (err, file) {
+      console.log('I saw a file. It was going like this: ' + file);
+    });
 
 ## License 
 
@@ -28,3 +42,44 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Gir
+
+                         __
+                      _,'  `:--.__
+                    ,'    .       `'--._
+                  ,'    .               `-._
+          ,-'''--/    .                     `.
+        ,'      /   .    ,,-''`-._            `.
+       ; .     /   .   ,'         `,            |____
+       |      /   .   ;             :           |--._\
+       '     /   :    |      .      |           |
+        `.  ;   _     :             ;           |
+          `-:   `"     \           ,           _|==:--.__
+             \.-------._`.       ,`        _.-'     `-._ `'-._
+              \  :        `-...,-``-.    .'             `-.   |
+               `.._         / | \     _.'                  `. |
+                   `.._    '--'```  .'                       `|
+                       `.          /
+                .        `-.       \
+         ___   / \  __.--`/ , _,    \
+       ,',  `./,--`'---._/ = / \,    \  __
+      /    .-`           `"-/   )_    \"`
+    _.--`-<_         ,..._ /,-'` /    /
+  ,'.-.     `.    ,-'     `.    /`'.+(
+ / /  /  __   \. ,'    ,   `.  '    \ \
+ |(_.'  /  \   ; |          |        ""_
+ |     (   ;   `  \        /           `.
+ '.     `-`   `    `.___,-`             `.
+   `.        `                           |
+    ; `-.__`                             |
+    \    -._                             |
+     `.                                  /
+      /`._                              /
+      \   `,                           /
+       `---'.     /                  ,'
+             '._,'-.              _,(_,_
+                    |`--.    ,,.-' `-.__)
+                     `--`._.'   dew   `._)
+                                         `=-
+
