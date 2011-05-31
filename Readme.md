@@ -1,10 +1,10 @@
 # Stalker
 
-Stalker is a utility to watch a directory tree for incomign files and fire off 
-the callback function __OF YOUR CHOICE!__.
+Stalker is a utility to watch a directory tree for incoming files. When if finds
+one, it will fire off a callback function __OF YOUR CHOICE!__.
 
 It should be smart enough to multiple files/folders being dropped into the 
-directory being stalked. I haven't tested it much. Be warned!
+directory being stalked. I haven't tested it much, so it might be dumb.
 
 ## Installation
 
