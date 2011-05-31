@@ -22,7 +22,7 @@ directory being stalked. I haven't tested it much. Be warned!
 
 (The MIT License)
 
-Copyright (c) 2011 Justin Slattery &lt;Justin.Slattery@fzysqr.com&gt;
+Copyright (c) 2011 Justin Slattery (Justin.Slattery@fzysqr.com)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
