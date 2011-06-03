@@ -2,3 +2,4 @@
 *.swo
 nodemon-ignore
 npm-debug.log
+node_modules/
