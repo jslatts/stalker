@@ -4,7 +4,7 @@ Stalker is a utility to watch a directory tree for incoming files. When if finds
 one, it will fire off a callback function __OF YOUR CHOICE!__.
 
 It should be smart enough to multiple files/folders being dropped into the 
-directory being stalked. I haven't tested it much, so it might be dumb.
+directory being stalked. 
 
 ## Installation
 
@@ -17,6 +17,16 @@ directory being stalked. I haven't tested it much, so it might be dumb.
     stalker.watch('some_directory', function (err, file) {
       console.log('I saw a file. It was going like this: ' + file);
     });
+
+## Running tests
+  
+    npm install jasmine
+    jasmine-node spec/
+
+You can also run test.js and play around adding and removing files from the
+example director:
+
+    node example/test.js
 
 ## License 
 
