@@ -2,19 +2,17 @@
   "author": "Justin Slattery <Justin.Slattery@fzysqr.com> (http://fzysqr.com/)",
   "name": "stalker",
   "description": "Monitor directory trees for new files then do... something.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/jslatts/stalker",
   "repository": {
     "type": "git",
     "url": "git://github.com/jslatts/stalker.git"
   },
   "main": "./lib/stalker.js",
-  "scripts": { "test": "jasmine-node test/*-test.js" },
+  "scripts": { "test": "jasmine-node spec/" },
   "engines": {
     "node": "v0.4.8"
   },
-  "dependencies": {
-    "winston": "0.2.x"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }
