@@ -22,8 +22,8 @@ describe('stalker', function () {
 });
 
 describe('watcher.addFile', function () {
-  var path = require('path');
-  var fs = require('fs');
+  var path  = require('path');
+  var fs    = require('fs');
   var tPath = path.resolve('./spec');
 
   var s;
@@ -70,8 +70,8 @@ describe('watcher.addFile', function () {
 });
 
 describe('watcher.checkFile', function () {
-  var path = require('path');
-  var fs = require('fs');
+  var path  = require('path');
+  var fs    = require('fs');
   var tPath = path.resolve('./spec');
 
   var s;

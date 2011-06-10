@@ -18,6 +18,17 @@ directory being stalked.
       console.log('I saw a file. It was going like this: ' + file);
     });
 
+
+Optionally, you can pass in a buffer time in milliseconds to make stalker batch up 
+the files and send them back in an array. The timer only starts when a new file
+drops.
+
+    stalker.watch('./example', {buffer: 5000}, function(err, f) { 
+      f.forEach(function _forEach(_f) {
+        console.log('I see ' + _f); 
+      });
+    });
+
 ## Running tests
   
     npm install jasmine
