@@ -1,1 +1,4 @@
 Things I should do:
+
+ - Get remove callbacks in batch mode
+ - Figure out why unit tests occasionally fail

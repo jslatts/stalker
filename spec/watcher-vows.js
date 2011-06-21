@@ -3,6 +3,7 @@ var assert  = require('assert');
 
 var fs      = require('fs');
 var path    = require('path');
+var util    = require('util');
 var puts    = require('vows/console').puts( { stream: process.stdout } );
 
 var tPath   = path.resolve('./spec');
@@ -90,6 +91,47 @@ vows.describe('watcher').addBatch({
           }
         }
       }
+    },
+    'addFile with new file in a nested subdir': {
+      topic: function (watcher) {
+        this.watcher = watcher;
+        this.lPath = tPath + '/t6';
+        this.nPath = this.lPath + '/nested';
+        try {
+          fs.mkdirSync(this.lPath, '0755'); 
+        }
+        catch (e) {
+        }
+        try {
+          fs.mkdirSync(this.nPath, '0755'); 
+        }
+        catch (r) { 
+        }
+        var tStream = fs.createWriteStream(this.nPath + '/temp');
+        tStream.end('fancy test file', 'utf8');
+        watcher.addFile(this.nPath, this.callback);
+      },
+      'then add the file': {
+        topic: function () {
+          this.watcher.addFile(this.nPath + '/temp', this.callback);
+        },
+        'then unlink the file': {
+          topic: function (err) {
+            fs.unlinkSync(this.nPath + '/temp');
+            fs.rmdirSync(this.nPath);
+            return true;
+          },
+          'then call syncfolder': {
+            topic: function () {
+              this.watcher.syncFolder(this.lPath, this.callback);
+            },
+            'calls remove callback with file': function (err, file) {
+              assert.isNull(err);
+              assert.equal(file, this.nPath + '/temp');
+            }
+          }
+        }
+      }
     }
   }
 }).addBatch({
@@ -99,10 +141,18 @@ vows.describe('watcher').addBatch({
       try {
         fs.unlinkSync(tPath + '/t4/temp');
       }
-      catch (Exception) { 
+      catch (a) { 
         //Do nothing 
       }
+
       fs.rmdirSync(tPath + '/t4'); 
+
+      try {
+        fs.rmdirSync(tPath + '/t6'); 
+      }
+      catch (b) { 
+        //Do nothing 
+      }
     }
   }
 }).export(module);

@@ -9,7 +9,7 @@
     "url": "git://github.com/jslatts/stalker.git"
   },
   "main": "./lib/stalker.js",
-  "scripts": { "test": "jasmine-node spec/" },
+  "scripts": { "test": "vows spec/*" },
   "engines": {
     "node": "v0.4.8"
   },

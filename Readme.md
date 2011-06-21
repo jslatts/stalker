@@ -29,13 +29,23 @@ drops.
       });
     });
 
+Stalker will also take a second callback that will be fired when files are removed:
+
+  stalker.watch('./example', function(err, f) { 
+    console.log('Added: ' + f); 
+  }, function(err, f) {
+    console.log('Removed: ' + f); 
+  });
+
+The remove callback does not currently batch files.
+
 ## Running tests
   
-    npm install jasmine
-    jasmine-node spec/
+    npm install vows
+    vows spec/*
 
-You can also run test.js and play around adding and removing files from the
-example director:
+You can also run example/*.js and play around adding and removing files from the
+example directory:
 
     node example/test.js
 
