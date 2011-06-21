@@ -1,12 +1,20 @@
 stalker = require('../');
 
-stalker.watch('./example', {buffer: 5000}, function(err, f) { 
+stalker.watch('./example', {buffer: 5000}, function _add(err, f) { 
   if (err) {
     console.log('Error was ' + err);
     return;
   }
   f.forEach(function _forEach(_f) {
-    console.log('I see ' + _f); 
+    console.log('Added:  ' + _f); 
+  });
+}, function _remove(err, f) {
+  if (err) {
+    console.log('Error was ' + err);
+    return;
+  }
+  f.forEach(function _forEach(_f) {
+    console.log('Remove: ' + _f); 
   });
 });
 

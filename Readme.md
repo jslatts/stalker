@@ -37,7 +37,7 @@ Stalker will also take a second callback that will be fired when files are remov
     console.log('Removed: ' + f); 
   });
 
-The remove callback does not currently batch files.
+The removal callback also works in batch mode.
 
 ## Running tests
   
