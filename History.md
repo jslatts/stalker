@@ -1,4 +1,23 @@
-0.0.6 / 2011-06-10
+0.0.11 / 2011-06-29
+==================
+
+  * Integrating pull request for better hidden file test.
+
+0.0.10 / 2011-06-29
+==================
+
+  * Update package.json for node 0.4.9
+
+0.0.9 / 2011-06-20
+==================
+  
+  * Adding removal callback
+
+0.0.7 / 2011-06-19
+==================
+
+  * Replaced jasmine tests with vows.js
+
 ==================
 
   * Implemented optional batching mechanism
