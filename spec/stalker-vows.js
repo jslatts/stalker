@@ -73,7 +73,7 @@ vows.describe('stalker').addBatch({
       catch (Exception) {}
       return lPath;
     },
-    'calling stalker.watch': {
+    'calling stalker.watch with remove callback': {
       topic: function (lPath) {
         this.lPath = lPath;
         stalker.watch(lPath, 
@@ -90,6 +90,72 @@ vows.describe('stalker').addBatch({
         assert.isNull(err);
         assert.equal(file, this.lPath + '/temp');
         fs.rmdirSync(this.lPath); 
+      }
+    }
+  },
+  'created temporary directory t3': {
+    topic: function () {
+      var lPath = tPath + '/t3';
+      try {
+        fs.mkdirSync(lPath, '0755'); 
+      }
+      catch (Exception) {}
+      return lPath;
+    },
+    'then called stalker.watch and updated one file': {
+      topic: function (lPath) {
+        this.lPath = lPath;
+
+        var rPath1 = lPath + '/temp1';
+        var tStream = fs.createWriteStream(rPath1);
+        tStream.end('fancy test file1', 'utf8');
+
+        var rPath2 = lPath + '/temp2';
+        tStream = fs.createWriteStream(rPath2);
+        tStream.end('fancy test file2', 'utf8');
+        
+        this.addCallBackFired = {};
+
+        var that = this;
+        stalker.watch(lPath, function(err, file) {
+            console.log('fired ' + file);
+            if (typeof that.addCallBackFired[file] === 'undefined') {
+              that.addCallBackFired[file] = false;
+            }
+            else {
+              that.addCallBackFired[file] = true;
+            }
+          }, function(err, file) {
+            setTimeout(function() {
+              that.callback(err, file);
+            }, 1000);
+          });
+
+        //After a second, modify one of the watched files and set a timer to 
+        //unlink the other. 
+        setTimeout(function() {
+          console.log('updating ' + rPath2);
+          var tStream = fs.createWriteStream(rPath2);
+          tStream.end('fancy test file2 update', 'utf8');
+
+          setTimeout(function() {
+            console.log('unlinking ' + rPath1);
+            fs.unlink(rPath1);
+          }, 1000);
+        }, 1000);
+
+      },
+      'expected not to fire callback for existing file': function (err, file) {
+        assert.isNull(err);
+        assert.equal(file, this.lPath + '/temp1');
+        console.dir(this.addCallBackFired);
+
+        assert.isFalse(this.addCallBackFired[this.lPath + '/temp2']);
+
+        var lPath = this.lPath;
+        fs.unlink(lPath + '/temp2', function () {
+          fs.rmdirSync(lPath); 
+        });
       }
     }
   }
