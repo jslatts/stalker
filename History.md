@@ -1,3 +1,8 @@
+0.0.12 / 2011-07-19
+==================
+
+  * Fixing issue #2 - Certain actions cause the add callback to fire when it shouldn't.
+
 0.0.11 / 2011-06-29
 ==================
 
