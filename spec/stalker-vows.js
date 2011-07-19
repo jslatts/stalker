@@ -118,7 +118,6 @@ vows.describe('stalker').addBatch({
 
         var that = this;
         stalker.watch(lPath, function(err, file) {
-            console.log('fired ' + file);
             if (typeof that.addCallBackFired[file] === 'undefined') {
               that.addCallBackFired[file] = false;
             }
@@ -134,12 +133,10 @@ vows.describe('stalker').addBatch({
         //After a second, modify one of the watched files and set a timer to 
         //unlink the other. 
         setTimeout(function() {
-          console.log('updating ' + rPath2);
           var tStream = fs.createWriteStream(rPath2);
           tStream.end('fancy test file2 update', 'utf8');
 
           setTimeout(function() {
-            console.log('unlinking ' + rPath1);
             fs.unlink(rPath1);
           }, 1000);
         }, 1000);
@@ -148,7 +145,6 @@ vows.describe('stalker').addBatch({
       'expected not to fire callback for existing file': function (err, file) {
         assert.isNull(err);
         assert.equal(file, this.lPath + '/temp1');
-        console.dir(this.addCallBackFired);
 
         assert.isFalse(this.addCallBackFired[this.lPath + '/temp2']);
 
