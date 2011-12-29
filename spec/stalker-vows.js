@@ -39,7 +39,7 @@ vows.describe('stalker').addBatch({
   },
  'file dropping in watched dir': {
     topic: function () {
-      var lPath = tPath + '/t1';
+      var lPath = tPath + '/s1';
       try {
         fs.mkdirSync(lPath, '0755'); 
       }
@@ -65,71 +65,76 @@ vows.describe('stalker').addBatch({
     }
   },
  'file dropping in watched dir with nested structure': {
-    topic: function () {
-      var lPath = tPath + '/outer';
-      var oPath = lPath + '/inner';
-      try {
-        fs.mkdirSync(lPath, '0755'); 
-        fs.mkdirSync(oPath, '0755'); 
-      }
-      catch (Exception) {}
-      return lPath;
-    },
     'calling stalker.watch on root dir with no recurse option and dropping file in root ': {
-      topic: function (lPath) {
-        this.lPath = lPath;
+      topic: function () {
+        var lPath = tPath + '/outer1';
+        var oPath = lPath + '/inner';
+
+        try {
+          fs.mkdirSync(lPath, '0755'); 
+          fs.mkdirSync(oPath, '0755'); 
+        }
+        catch (Exception) {}
+
         stalker.watch(lPath, this.callback);
         var rPath = lPath + '/temp';
         var tStream = fs.createWriteStream(rPath);
         tStream.end('fancy test file', 'utf8');
       },
       'fires callback': function (err, file) {
-        var lPath = this.lPath;
+        var lPath = tPath + '/outer1';
+        var oPath = lPath + '/inner';
         assert.isNull(err);
         assert.equal(file, lPath + '/temp');
-        fs.unlink(lPath + '/temp', function () {
-          fs.rmdirSync(lPath + '/inner'); 
-          fs.rmdirSync(lPath); 
+        fs.unlink(lPath + '/temp', function() {
+          fs.rmdir(oPath, function() {
+            fs.rmdir(lPath);
+          });
         });
       }
     },
     'calling stalker.watch on root dir with no recurse option and dropping file in nested ': {
-      topic: function (lPath) {
-        this.lPath = lPath;
+      topic: function (topic) {
+        var lPath = tPath + '/outer2';
         var oPath = lPath + '/inner';
+        try {
+          fs.mkdirSync(lPath, '0755'); 
+          fs.mkdirSync(oPath, '0755'); 
+        }
+        catch (Exception) {}
 
         this.addCallBackFired = {};
         var that = this;
         stalker.watch(lPath, function(err, file) {
-            if (typeof that.addCallBackFired[file] === 'undefined') {
-              that.addCallBackFired[file] = false;
-            }
-            else {
-              that.addCallBackFired[file] = true;
-            }
-          }, function(err, file) {
-            setTimeout(function() {
-              that.callback(err, file);
-            }, 1000);
-          });
+          if (typeof that.addCallBackFired[file] === 'undefined') {
+            that.addCallBackFired[file] = false;
+          }
+          else {
+            that.addCallBackFired[file] = true;
+          }
+          that.callback(err, file);
+        });
         var rPath = oPath + '/temp';
         var tStream = fs.createWriteStream(rPath);
         tStream.end('fancy test file', 'utf8');
       },
       'does not fire callback': function (err, file) {
-        var lPath = this.lPath;
+        var lPath = tPath + '/outer2';
+        var oPath = lPath + '/inner';
 
         assert.isFalse(this.addCallBackFired[oPath + '/temp']);
 
-        fs.unlink(lPath + '/temp', function () {
-          fs.rmdirSync(lPath); 
+        fs.unlink(oPath + '/temp', function() {
+          fs.rmdir(oPath, function() {
+            fs.rmdir(lPath);
+          });
         });
       }
     }
   },
   'file remove in watched dir': {
     topic: function () {
-      var lPath = tPath + '/t2';
+      var lPath = tPath + '/s2';
       try {
         fs.mkdirSync(lPath, '0755'); 
       }
@@ -156,9 +161,9 @@ vows.describe('stalker').addBatch({
       }
     }
   },
-  'created temporary directory t3': {
+  'created temporary directory s3': {
     topic: function () {
-      var lPath = tPath + '/t3';
+      var lPath = tPath + '/s3';
       try {
         fs.mkdirSync(lPath, '0755'); 
       }
@@ -212,9 +217,8 @@ vows.describe('stalker').addBatch({
         assert.isFalse(this.addCallBackFired[this.lPath + '/temp2']);
 
         var lPath = this.lPath;
-        fs.unlink(lPath + '/temp2', function () {
-          fs.rmdirSync(lPath); 
-        });
+        fs.unlinkSync(lPath + '/temp2');
+        fs.rmdirSync(lPath); 
       }
     }
   }
