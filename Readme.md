@@ -18,12 +18,21 @@ directory being stalked.
       console.log('I saw a file. It was going like this: ' + file);
     });
 
+## Options
 
-Optionally, you can pass in a buffer time in milliseconds to make stalker batch up 
+You can pass in a buffer time in milliseconds to make stalker batch up 
 the files and send them back in an array. The timer only starts when a new file
 drops.
 
     stalker.watch('./example', {buffer: 5000}, function(err, f) { 
+      f.forEach(function _forEach(_f) {
+        console.log('I see ' + _f); 
+      });
+    });
+
+Setting recurse to false will keep stalker for walking down directories.
+
+    stalker.watch('./example', {recurse: false}, function(err, f) { 
       f.forEach(function _forEach(_f) {
         console.log('I see ' + _f); 
       });

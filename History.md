@@ -1,4 +1,8 @@
-0.0.12 / 2011-07-19
+0.0.13 / 2011-07-19
+==================
+
+  * Issue #4 - adding recurse flag to limit stalker to original directory.
+
 ==================
 
   * Fixing issue #2 - Certain actions cause the add callback to fire when it shouldn't.

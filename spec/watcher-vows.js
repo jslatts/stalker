@@ -4,7 +4,7 @@ var assert  = require('assert');
 var fs      = require('fs');
 var path    = require('path');
 var util    = require('util');
-var puts    = require('vows/console').puts( { stream: process.stdout } );
+//var puts    = require('vows/console').puts( { stream: process.stdout } );
 
 var tPath   = path.resolve('./spec');
 var wMaker = require('../lib/watcher');
@@ -19,7 +19,7 @@ vows.describe('watcher').addBatch({
         watcher.addFile('fakedir/blah/test', this.callback);
       },
       'calls back with error': function (err, file) {
-        assert.match(err.message, /No such file or directory/);
+        assert.match(err.message, /ENOENT, no such file or directory \'fakedir\/blah\/test\'/);
       }
     },
     'addFile with valid path': {

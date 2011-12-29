@@ -1,6 +1,6 @@
 stalker = require('../');
 
-stalker.watch('./example', {norecurse: true}, function(err, f) { 
+stalker.watch('./example', {recurse: false}, function(err, f) { 
   if (err) {
     console.log('Error was ' + err);
     return;

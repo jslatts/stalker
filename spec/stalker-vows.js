@@ -3,7 +3,7 @@ var assert = require('assert');
 
 var fs    = require('fs');
 var path  = require('path');
-var puts = require('vows/console').puts( { stream: process.stdout } );
+//var puts = require('vows/console').puts( { stream: process.stdout } );
 
 var tPath = path.resolve('./spec');
 var stalker = require('../');
@@ -58,6 +58,69 @@ vows.describe('stalker').addBatch({
         var lPath = this.lPath;
         assert.isNull(err);
         assert.equal(file, lPath + '/temp');
+        fs.unlink(lPath + '/temp', function () {
+          fs.rmdirSync(lPath); 
+        });
+      }
+    }
+  },
+ 'file dropping in watched dir with nested structure': {
+    topic: function () {
+      var lPath = tPath + '/outer';
+      var oPath = lPath + '/inner';
+      try {
+        fs.mkdirSync(lPath, '0755'); 
+        fs.mkdirSync(oPath, '0755'); 
+      }
+      catch (Exception) {}
+      return lPath;
+    },
+    'calling stalker.watch on root dir with no recurse option and dropping file in root ': {
+      topic: function (lPath) {
+        this.lPath = lPath;
+        stalker.watch(lPath, this.callback);
+        var rPath = lPath + '/temp';
+        var tStream = fs.createWriteStream(rPath);
+        tStream.end('fancy test file', 'utf8');
+      },
+      'fires callback': function (err, file) {
+        var lPath = this.lPath;
+        assert.isNull(err);
+        assert.equal(file, lPath + '/temp');
+        fs.unlink(lPath + '/temp', function () {
+          fs.rmdirSync(lPath + '/inner'); 
+          fs.rmdirSync(lPath); 
+        });
+      }
+    },
+    'calling stalker.watch on root dir with no recurse option and dropping file in nested ': {
+      topic: function (lPath) {
+        this.lPath = lPath;
+        var oPath = lPath + '/inner';
+
+        this.addCallBackFired = {};
+        var that = this;
+        stalker.watch(lPath, function(err, file) {
+            if (typeof that.addCallBackFired[file] === 'undefined') {
+              that.addCallBackFired[file] = false;
+            }
+            else {
+              that.addCallBackFired[file] = true;
+            }
+          }, function(err, file) {
+            setTimeout(function() {
+              that.callback(err, file);
+            }, 1000);
+          });
+        var rPath = oPath + '/temp';
+        var tStream = fs.createWriteStream(rPath);
+        tStream.end('fancy test file', 'utf8');
+      },
+      'does not fire callback': function (err, file) {
+        var lPath = this.lPath;
+
+        assert.isFalse(this.addCallBackFired[oPath + '/temp']);
+
         fs.unlink(lPath + '/temp', function () {
           fs.rmdirSync(lPath); 
         });
