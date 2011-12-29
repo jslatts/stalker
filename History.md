@@ -1,3 +1,9 @@
+0.0.15 / 2011-12-29
+==================
+
+  * Issue #5 - finish basic implementation of stop. Should work. I think. Volunteer test writing will be accepted.
+  * Issue #3 - all tests are passing on OSX. Let me know if yous aren't.
+
 0.0.13 / 2011-07-19
 ==================
 
