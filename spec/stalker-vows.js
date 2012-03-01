@@ -87,7 +87,7 @@ vows.describe('stalker').addBatch({
         assert.isNull(err);
         assert.equal(file, lPath + '/temp');
         fs.unlink(lPath + '/temp', function() {
-          fs.rmdir(oPath, function() {
+          fs.rmdir(oPath, function(err) {
             fs.rmdir(lPath);
           });
         });
