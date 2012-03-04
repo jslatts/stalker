@@ -58,9 +58,6 @@ vows.describe('stalker').addBatch({
         var lPath = this.lPath;
         assert.isNull(err);
         assert.equal(file, lPath + '/temp');
-        fs.unlink(lPath + '/temp', function () {
-          fs.rmdirSync(lPath); 
-        });
       }
     }
   },
@@ -86,11 +83,6 @@ vows.describe('stalker').addBatch({
         var oPath = lPath + '/inner';
         assert.isNull(err);
         assert.equal(file, lPath + '/temp');
-        fs.unlink(lPath + '/temp', function() {
-          fs.rmdir(oPath, function(err) {
-            fs.rmdir(lPath);
-          });
-        });
       }
     },
     'calling stalker.watch on root dir with no recurse option and dropping file in nested ': {
@@ -123,12 +115,6 @@ vows.describe('stalker').addBatch({
         var oPath = lPath + '/inner';
 
         assert.isFalse(this.addCallBackFired[oPath + '/temp']);
-
-        fs.unlink(oPath + '/temp', function() {
-          fs.rmdir(oPath, function() {
-            fs.rmdir(lPath);
-          });
-        });
       }
     }
   },
@@ -215,11 +201,46 @@ vows.describe('stalker').addBatch({
         assert.equal(file, this.lPath + '/temp1');
 
         assert.isFalse(this.addCallBackFired[this.lPath + '/temp2']);
-
-        var lPath = this.lPath;
-        fs.unlinkSync(lPath + '/temp2');
-        fs.rmdirSync(lPath); 
       }
+    }
+  }
+}).addBatch({
+  'cleanup': {
+    'delete files': function () {
+      fs.rmdirSync(tPath + '/outer1/inner'); 
+      try {
+        fs.unlinkSync(tPath + '/outer1/temp');
+      }
+      catch (a) { 
+        //Do nothing 
+      }
+      fs.rmdirSync(tPath + '/outer1'); 
+
+      try {
+        fs.unlinkSync(tPath + '/outer2/inner/temp');
+      }
+      catch (a) { 
+        //Do nothing 
+      }
+      fs.rmdirSync(tPath + '/outer2/inner'); 
+      fs.rmdirSync(tPath + '/outer2'); 
+
+      try {
+        fs.unlinkSync(tPath + '/s1/temp');
+      }
+      catch (a) { 
+        //Do nothing 
+      }
+      fs.rmdirSync(tPath + '/s1'); 
+
+      try {
+        fs.unlinkSync(tPath + '/s3/temp2');
+      }
+      catch (a) { 
+        //Do nothing 
+      }
+      fs.rmdirSync(tPath + '/s3'); 
+
     }
   }
 }).export(module);
