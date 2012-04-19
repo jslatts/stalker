@@ -1,7 +1,7 @@
 # Stalker
 
 Stalker is a utility to watch a directory tree for incoming files. When if finds
-one, it will fire off a callback function __OF YOUR CHOICE!__.
+one, it will fire off a callback function __OF YOUR CHOICE!__
 
 It should be smart enough to handle multiple files/folders being dropped into the 
 directory being stalked. 
