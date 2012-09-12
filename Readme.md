@@ -49,12 +49,10 @@ Stalker will also take a second callback that will be fired when files are remov
 The removal callback also works in batch mode.
 
 ## Running tests
-  
-    npm install vows
-    vows spec/*
 
-You can also run example/*.js and play around adding and removing files from the
-example directory:
+I couldn't handle vows.js anymore. I ripped it out. Will replace with something 
+else in the future. For now, run example/*.js and play around adding and 
+removing files from the example directory:
 
     node example/test.js
 
