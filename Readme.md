@@ -33,9 +33,15 @@ drops.
 Setting recurse to false will keep stalker for walking down directories.
 
     stalker.watch('./example', {recurse: false}, function(err, f) { 
-      f.forEach(function _forEach(_f) {
-        console.log('I see ' + _f); 
-      });
+      console.log('I see ' + _f); 
+    });
+
+Setting strict to true will make stalker return for modified files.
+*This has unpredictable behavior on windows/OSX. I have only used it
+on Linux*
+
+    stalker.watch('./example', {strict: true}, function(err, f) { 
+      console.log('I see ' + _f); 
     });
 
 Stalker will also take a second callback that will be fired when files are removed:
