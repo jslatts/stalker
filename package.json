@@ -2,7 +2,7 @@
   "author": "Justin Slattery <Justin.Slattery@fzysqr.com> (http://fzysqr.com/)",
   "name": "stalker",
   "description": "Monitor directory trees for new files then do... something.",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "homepage": "https://github.com/jslatts/stalker",
   "repository": {
     "type": "git",
