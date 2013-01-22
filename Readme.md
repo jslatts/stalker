@@ -54,6 +54,18 @@ Stalker will also take a second callback that will be fired when files are remov
 
 The removal callback also works in batch mode.
 
+The startSilent parameter will prevent stalker from telling you about all the 
+existing files in the directory:
+
+    stalker.watch('./example', {startSilent: true}, function(err, f) { 
+      if (err) {
+        console.log('Error was ' + err);
+        return;
+      }
+      console.log('I see ' + f); 
+    });
+
+
 ## Running tests
 
 I couldn't handle vows.js anymore. I ripped it out. Will replace with something 
